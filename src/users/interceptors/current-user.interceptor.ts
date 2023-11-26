@@ -8,7 +8,6 @@ import { UsersService } from '../users.service';
 
 //need to add CurrentUserInterceptor to providers in users.module.ts !!!
 
-//need to add @UseInterceptors(CurrentUserInterceptor) to users controller
 @Injectable()
 export class CurrentUserInterceptor implements NestInterceptor {
   constructor(private usersService: UsersService) {}
