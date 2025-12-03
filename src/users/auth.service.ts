@@ -7,6 +7,11 @@ import { UsersService } from './users.service';
 import { randomBytes, scrypt as _scrypt } from 'crypto';
 import { promisify } from 'util';
 
+//randomBytes: функція з модуля crypto, яка генерує криптографічно захищені випадкові байти. Її часто використовують для створення соль (salt) або ключів.
+//scrypt: функція для хешування паролів із використанням алгоритму scrypt. Це сучасний і безпечний алгоритм для хешування, який добре підходить для зберігання паролів.
+//promisify: функція з модуля util, яка перетворює функцію з колбеком (callback) у функцію, яка повертає Promise.
+//функція scrypt у модулі crypto використовує колбеки, що може ускладнити роботу з нею в сучасному JavaScript
+//promisify перетворює _scrypt у функцію, яка працює на основі Promise
 const script = promisify(_scrypt);
 
 @Injectable()
@@ -22,13 +27,16 @@ export class AuthService {
 
     // If email is not in use, hash the password
     //Generate a salt
-    //generate 16 characters long hash
+
+    //randomBytes generates 16 characters long string
     const salt = randomBytes(8).toString('hex');
 
     //Hash the salt and the password together
+    //32 - це довжина хеша (32 байти або символи)
     const hash = (await script(password, salt, 32)) as Buffer;
 
     //Join the hashed result and the salt together
+    //toString('hex') перетворює у шістнадцятковий формат
     const result = salt + '.' + hash.toString('hex');
 
     // Create a new user and save it

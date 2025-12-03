@@ -7,6 +7,7 @@ import { createParamDecorator, ExecutionContext } from '@nestjs/common';
 //by it in the decorator.
 
 export const CurrentUser = createParamDecorator(
+  //тут дата never тому що ми ніколи нічого ну юудемо передавати в декоратор параметром
   (data: never, context: ExecutionContext) => {
     const request = context.switchToHttp().getRequest();
     return request.currentUser;

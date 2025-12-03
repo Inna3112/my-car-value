@@ -36,8 +36,8 @@ describe('UsersController', () => {
       controllers: [UsersController],
       providers: [
         {
-          provide: UsersService,
-          useValue: fakeUsersService,
+          provide: UsersService, //це значить що di контейнер буде запрошувати цей сервіс під час тестування
+          useValue: fakeUsersService, // але ми його значення замінюємо на фейкове
         },
         {
           provide: AuthService,

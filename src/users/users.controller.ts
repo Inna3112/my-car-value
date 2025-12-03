@@ -22,7 +22,8 @@ import { User } from './user.entity';
 import { AuthGuard } from '../guards/auth.guard';
 
 @Controller('auth')
-@Serialize(UserDto)
+//@Serialize це інтерцептор
+@Serialize(UserDto) //застосовує до всіх методів повернення даних клієнту в форматі UserDto
 export class UsersController {
   constructor(
     private userService: UsersService,
@@ -36,6 +37,8 @@ export class UsersController {
 
   @Get('/whoami')
   @UseGuards(AuthGuard)
+  //@CurrentUser custom param decorator
+  //Можна передати параметр в декоратор, наприклад @CurrentUser('admin') в декораторі параметр прийде першим аргументом
   whoAmI(@CurrentUser() user: User) {
     return user;
   }
@@ -47,6 +50,8 @@ export class UsersController {
 
   @Post('/signup')
   async createUser(@Body() body: CreateUserDto, @Session() session: any) {
+    //session тут це кукі
+    //тут є хедер Set-Cookie
     const user = await this.authService.signup(body.email, body.password);
     session.userId = user.id;
 
@@ -55,15 +60,17 @@ export class UsersController {
 
   @Post('/signin')
   async signin(@Body() body: CreateUserDto, @Session() session: any) {
+    //session тут це кукі
+    //тут немає хедера Set-Cookie тому що кукі повертається назад з браузера
     const user = await this.authService.signin(body.email, body.password);
     session.userId = user.id;
 
     return user;
   }
 
+  // @Serialize(UserDto) //застосовує до цього методу повернення даних клієнту в форматі UserDto
   @Get('/:id')
   async findUser(@Param('id') id: string) {
-    // console.log('2 Handler is running');
     const user = await this.userService.findOne(parseInt(id));
     if (!user) {
       throw new NotFoundException('User not found');

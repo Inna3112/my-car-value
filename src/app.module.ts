@@ -26,7 +26,7 @@ const cookieSession = require('cookie-session');
           type: 'sqlite',
           database: config.get<string>('DB_NAME'),
           entities: [User, Report],
-          synchronize: true,
+          synchronize: true, //only for development, it links with migrations
         };
       },
     }),
@@ -42,7 +42,7 @@ const cookieSession = require('cookie-session');
   controllers: [AppController],
   providers: [
     AppService,
-    //перенесли сюди з main.js для e2e тестів
+    //перенесли сюди з main.js для e2e тестів - щоб вони могли теж це бачити бо з main.js вони не юзаються
     {
       provide: APP_PIPE,
       useValue: new ValidationPipe({

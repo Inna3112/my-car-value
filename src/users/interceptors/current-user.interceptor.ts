@@ -7,6 +7,7 @@ import {
 import { UsersService } from '../users.service';
 
 //need to add CurrentUserInterceptor to providers in users.module.ts !!!
+//для забезпечення інтеграції з di контейнером
 
 @Injectable()
 export class CurrentUserInterceptor implements NestInterceptor {
