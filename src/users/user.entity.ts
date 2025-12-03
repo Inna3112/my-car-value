@@ -21,6 +21,7 @@ export class User {
   password: string;
 
   @OneToMany(() => Report, (report) => report.user)
+  //з цим декоратором в таблиці users не буде додаткових колонок,
   reports: Report[];
 
   @AfterInsert()
