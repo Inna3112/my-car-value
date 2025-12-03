@@ -32,6 +32,15 @@ switch (process.env.NODE_ENV) {
     });
     break;
   case 'production':
+    Object.assign(dbConfig, {
+      type: 'postgres', //щоб postgres працювало треба в проекті додати пакет npm install pg
+      url: process.env.DATABASE_URL, //heroku
+      migrationsRun: true,
+      entities: ['**/*.entity.js'],
+      ssl: {
+        rejectUnauthorized: false,
+      }, //heroku
+    });
     break;
   default:
     throw new Error('unknown environment');
