@@ -1,5 +1,5 @@
 import { Expose, Transform } from 'class-transformer';
-
+//це структура даних яку повертає бекенд фронту (треба вона щоб приховати зайві поля)
 export class ReportDto {
   @Expose()
   id: number;
@@ -24,6 +24,9 @@ export class ReportDto {
 
   @Expose()
   lat: number;
+
+  @Expose()
+  approved: number;
 
   //obj - це увесь об'єкт Report, з якого ми беремо user і з нього дістаємо id
   @Transform(({ obj }) => obj.user.id)

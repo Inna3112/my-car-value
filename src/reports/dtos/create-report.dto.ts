@@ -6,7 +6,7 @@ import {
   IsLongitude,
   IsLatitude,
 } from 'class-validator';
-
+//це стурктура даних яку приймає бекенд з фронта (щоб валідувати дані)
 export class CreateReportDto {
   @IsNumber()
   @Min(0)
